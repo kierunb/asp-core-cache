@@ -1,0 +1,47 @@
+Caching basics:
+
+Caching can significantly improve the performance and scalability of an app by reducing the work required to generate content. 
+Caching works best with data that changes infrequently and is expensive to generate. 
+Caching makes a copy of data that can be returned much faster than from the source. 
+Apps should be written and tested to never depend on cached data.
+
+IMemoryCache represents a cache stored in the memory of the web server. 
+Apps running on a server farm (multiple servers) should ensure sessions are sticky when using the in-memory cache. 
+Sticky sessions ensure that subsequent requests from a client all go to the same server. 
+For example, Azure Web apps use Application Request Routing (ARR) to route all subsequent requests to the same server.
+
+Cache-aside pattern:
+- Load data on demand into a cache from a data store.
+- https://docs.microsoft.com/en-us/azure/architecture/patterns/cache-aside
+
+Cache types:
+- InMemoryCaching:
+	- https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-5.0
+	- Potential issues with thread safaty:
+		- https://blog.novanet.no/asp-net-core-memory-cache-is-get-or-create-thread-safe/
+- Distributed Cache:
+	- https://docs.microsoft.com/en-us/aspnet/core/performance/caching/distributed?view=aspnetcore-5.0
+	- https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/cache-web-app-aspnet-core-howto?tabs=core5x
+	- SQL Server
+	- Redis
+	- StackExchange Redis
+		- https://stackexchange.github.io/StackExchange.Redis/
+	- Others: MemCached, NCache
+		- https://memcached.org/
+		- https://www.alachisoft.com/ncache/
+- 3rd party:
+	- LazyCache (3rd party)
+		- https://github.com/alastairtree/LazyCache
+		- https://alastaircrabtree.com/the-easy-way-to-add-caching-to-net-application-and-make-it-faster-is-called-lazycache/
+		- Better locking and concurrency
+	- Polly, others
+		- https://github.com/App-vNext/Polly.Caching.MemoryCache
+- Response Caching:
+	- https://thecodeblogger.com/2021/06/05/http-response-caching-attribute-in-net-core-web-apis/
+- Object reuse with ObjectPool:
+	- https://docs.microsoft.com/en-us/aspnet/core/performance/objectpool?view=aspnetcore-5.0
+	- https://stackoverflow.com/questions/2510975/c-sharp-object-pooling-pattern-implementation
+
+- Resiliency:
+	- Polly
+		- https://github.com/App-vNext/Polly
